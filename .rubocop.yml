@@ -1,0 +1,84 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+  Exclude:
+    - "vendor/**/*"
+    - "bin/**/*"
+
+Layout/LineLength:
+  Max: 130
+
+Layout/FirstHashElementLineBreak:
+  Enabled: true
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/HashAlignment:
+  EnforcedLastArgumentHashStyle: ignore_implicit
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 30
+  Exclude:
+    - "spec/**/*"
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+# The gem deliberately overrides framework methods such as
+# `has_and_belongs_to_many`, which trip the predicate-naming heuristic.
+Naming/PredicatePrefix:
+  Enabled: false
+
+Style/OpenStructUse:
+  Exclude:
+    - "spec/**/*"
+
+Style/ArgumentsForwarding:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Style/StringConcatenation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false

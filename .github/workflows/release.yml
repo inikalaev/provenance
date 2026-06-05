@@ -1,0 +1,35 @@
+name: Release
+
+# Publishes the gem to RubyGems.org via Trusted Publishing (OIDC) whenever a
+# version tag is pushed. No API keys are stored in the repository.
+#
+# One-time setup: configure a trusted publisher for this gem on RubyGems.org
+# (Gem settings -> Trusted publishers) pointing at this repository and the
+# `release.yml` workflow. See https://guides.rubygems.org/trusted-publishing/
+#
+# If you attach a GitHub Environment to the trusted publisher, uncomment the
+# `environment:` line below to match it.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    # environment: release
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Publish to RubyGems
+        uses: rubygems/release-gem@v1
