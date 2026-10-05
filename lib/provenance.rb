@@ -28,6 +28,7 @@ require "provenance/middleware"
 require "provenance/controller"
 require "provenance/job"
 require "provenance/rake"
+require "provenance/outbox"
 
 # Provenance emits one action-level audit event per HTTP request, background job,
 # rake task or explicit block, and delivers it to security and observability tooling.
@@ -37,6 +38,7 @@ require "provenance/rake"
 #     c.sink :logger
 #   end
 module Provenance
+  autoload :RelayJob, "provenance/relay_job"
 
   STATE_KEY = :provenance_action
   SUPPRESS_KEY = :provenance_suppressed

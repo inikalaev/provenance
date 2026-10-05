@@ -1,0 +1,21 @@
+class CreateProvenanceOutbox < ActiveRecord::Migration<%= migration_version %>
+  def change
+    create_table :provenance_outbox do |t|
+      t.string :app, null: false
+      t.string :event_id, null: false
+      t.bigint :seq
+      t.string :mac
+      t.text :payload, null: false
+      t.string :status, null: false, default: "pending"
+      t.integer :attempts, null: false, default: 0
+      t.datetime :next_attempt_at
+      t.datetime :delivered_at
+      t.text :last_error
+      t.timestamps
+    end
+
+    add_index :provenance_outbox, [:status, :id]
+    add_index :provenance_outbox, [:app, :seq], unique: true
+    add_index :provenance_outbox, :delivered_at
+  end
+end

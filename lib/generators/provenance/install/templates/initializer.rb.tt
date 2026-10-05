@@ -1,0 +1,12 @@
+Provenance.configure do |c|
+  c.enabled = !Rails.env.test?
+  c.actor { |ctx| ctx.controller.try(:current_user) }
+  c.format = :native
+  c.sink :logger
+
+  # Reliable delivery through the provenance_outbox table (run the generated migration).
+  c.outbox = true
+
+  # Tamper evidence; requires the outbox.
+  # c.integrity.key = ENV["PROVENANCE_HMAC_KEY"]
+end
