@@ -9,6 +9,22 @@ require "active_record"
 
 require "provenance/version"
 require "provenance/errors"
+require "provenance/uuid"
+require "provenance/json_safe"
+require "provenance/configuration"
+require "provenance/actor"
+require "provenance/context"
+require "provenance/entity_change"
+require "provenance/action"
+require "provenance/registry"
+require "provenance/redactor"
+require "provenance/emitter"
+require "provenance/recorder"
+require "provenance/model"
+require "provenance/middleware"
+require "provenance/controller"
+require "provenance/job"
+require "provenance/rake"
 
 # Provenance emits one action-level audit event per HTTP request, background job,
 # rake task or explicit block, and delivers it to security and observability tooling.
@@ -140,3 +156,5 @@ module Provenance
   end
 end
 
+require "provenance/testing"
+require "provenance/railtie" if defined?(Rails::Railtie)
