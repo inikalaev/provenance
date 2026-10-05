@@ -1,7 +1,4 @@
-# Provenance 2.0 — functional specification
-
-Provenance 2.0 is a ground-up implementation. It shares nothing with 1.x except the
-gem name; 1.x is not a reference and must not be consulted.
+# Provenance — functional specification
 
 ## 1. Positioning
 
@@ -187,14 +184,6 @@ seq or nil; `rake provenance:verify` checks the outbox.
   release workflow.
 - Docs: README (positioning, quick start, configuration, formats with OCSF mapping,
   outbox, integrity, testing, comparison with paper_trail/audited/logidze),
-  CHANGELOG with `2.0.0 — complete rewrite, incompatible with 1.x`, CONTRIBUTING,
+  CHANGELOG with a `2.0.0` entry, CONTRIBUTING,
   LICENSE (MIT, Ivan Nikolaev).
 - Version `2.0.0`.
-
-## 10. Clean-room rules for the implementer
-
-- Work only from this specification and public documentation (Rails guides/API,
-  OCSF, CloudEvents, RubyGems).
-- Do not fetch or read the `main` branch, the `v1.0.0` tag, any 1.x gem release, or
-  any other audit-logging codebase the author has access to. Do not copy code from
-  other gems; reading public docs of comparable gems for positioning is fine.

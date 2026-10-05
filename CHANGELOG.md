@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0 — complete rewrite, incompatible with 1.x
+## 2.0.0
 
 - One action-level event per HTTP request, ActiveJob job, rake task or explicit
   `Provenance.action` block, with actor, request context, outcome and entity changes.
