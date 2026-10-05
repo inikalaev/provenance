@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:provenance:event:2",
+  "title": "Provenance action event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "id", "occurred_at", "app", "action", "actor", "request", "outcome", "changes", "metadata"],
+  "properties": {
+    "schema": {"const": "provenance/event@2"},
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "occurred_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+    },
+    "app": {"type": "string", "minLength": 1},
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name", "caused_by"],
+      "properties": {
+        "kind": {"enum": ["http", "job", "task", "custom"]},
+        "name": {"type": "string"},
+        "caused_by": {"type": ["string", "null"]}
+      }
+    },
+    "actor": {
+      "oneOf": [{"type": "null"}, {"$ref": "#/$defs/actor"}]
+    },
+    "request": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "method", "path", "status", "ip", "user_agent"],
+          "properties": {
+            "id": {"type": ["string", "null"]},
+            "method": {"type": "string"},
+            "path": {"type": "string"},
+            "status": {"type": ["integer", "null"]},
+            "ip": {"type": ["string", "null"]},
+            "user_agent": {"type": ["string", "null"]}
+          }
+        }
+      ]
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result", "error"],
+      "properties": {
+        "result": {"enum": ["success", "failure", "denied"]},
+        "error": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["class", "message"],
+              "properties": {
+                "class": {"type": "string"},
+                "message": {"type": "string", "maxLength": 500}
+              }
+            }
+          ]
+        }
+      }
+    },
+    "changes": {"type": "array", "items": {"$ref": "#/$defs/change"}},
+    "metadata": {"type": "object"},
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seq", "prev", "mac"],
+      "properties": {
+        "seq": {"type": "integer", "minimum": 1},
+        "prev": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "mac": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  },
+  "$defs": {
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "display", "roles", "impersonator"],
+      "properties": {
+        "id": {"type": ["string", "null"]},
+        "type": {"type": ["string", "null"]},
+        "display": {"type": ["string", "null"]},
+        "roles": {"type": "array", "items": {"type": "string"}},
+        "impersonator": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/actor"}]}
+      }
+    },
+    "change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity", "entity_id", "operation", "diff"],
+      "properties": {
+        "entity": {"type": "string"},
+        "entity_id": {"type": ["string", "null"]},
+        "operation": {
+          "enum": ["create", "update", "destroy", "link", "unlink", "bulk_update", "bulk_delete", "bulk_insert"]
+        },
+        "diff": {"type": ["object", "null"]},
+        "association": {"type": "string"},
+        "target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "id"],
+          "properties": {
+            "type": {"type": "string"},
+            "id": {"type": ["string", "null"]}
+          }
+        },
+        "count": {"type": ["integer", "null"]},
+        "where": {"type": ["string", "null"]},
+        "ids": {"type": "array", "items": {"type": "string"}},
+        "truncated": {"type": "boolean"}
+      }
+    }
+  }
+}
